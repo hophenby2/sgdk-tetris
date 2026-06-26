@@ -1,0 +1,1 @@
+out/release/res/resources.o: res/resources.res
