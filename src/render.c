@@ -9,7 +9,7 @@
 
 #define BLOCK_TILE_BASE TILE_USER_INDEX
 #define BLOCK_TILE_EMPTY BLOCK_TILE_BASE
-#define BLOCK_TILE_COUNT 15
+#define BLOCK_TILE_COUNT 8
 
 #define BLOCK_COLOR_I 1
 #define BLOCK_COLOR_O 2
@@ -26,25 +26,15 @@
     (((u32)(a) << 28) | ((u32)(b) << 24) | ((u32)(c) << 20) | ((u32)(d) << 16) | \
      ((u32)(e) << 12) | ((u32)(f) << 8) | ((u32)(g) << 4) | (u32)(h))
 
-#define BLOCK_LEFT(main) \
+#define BLOCK_SQUARE(main) \
     BLOCK_ROW(BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE), \
-    BLOCK_ROW(BLOCK_COLOR_OUTLINE, BLOCK_COLOR_HIGHLIGHT, BLOCK_COLOR_HIGHLIGHT, main, main, main, main, main), \
-    BLOCK_ROW(BLOCK_COLOR_OUTLINE, BLOCK_COLOR_HIGHLIGHT, main, main, main, main, main, main), \
-    BLOCK_ROW(BLOCK_COLOR_OUTLINE, main, main, main, main, main, main, main), \
-    BLOCK_ROW(BLOCK_COLOR_OUTLINE, main, main, main, main, main, main, main), \
-    BLOCK_ROW(BLOCK_COLOR_OUTLINE, main, main, main, main, main, main, main), \
-    BLOCK_ROW(BLOCK_COLOR_OUTLINE, main, main, main, main, main, main, main), \
-    BLOCK_ROW(BLOCK_COLOR_OUTLINE, BLOCK_COLOR_SHADOW, BLOCK_COLOR_SHADOW, BLOCK_COLOR_SHADOW, BLOCK_COLOR_SHADOW, BLOCK_COLOR_SHADOW, BLOCK_COLOR_SHADOW, BLOCK_COLOR_SHADOW)
-
-#define BLOCK_RIGHT(main) \
-    BLOCK_ROW(BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE), \
-    BLOCK_ROW(main, main, main, main, main, main, BLOCK_COLOR_SHADOW, BLOCK_COLOR_OUTLINE), \
-    BLOCK_ROW(main, main, main, main, main, main, BLOCK_COLOR_SHADOW, BLOCK_COLOR_OUTLINE), \
-    BLOCK_ROW(main, main, main, main, main, main, BLOCK_COLOR_SHADOW, BLOCK_COLOR_OUTLINE), \
-    BLOCK_ROW(main, main, main, main, main, main, BLOCK_COLOR_SHADOW, BLOCK_COLOR_OUTLINE), \
-    BLOCK_ROW(main, main, main, main, main, main, BLOCK_COLOR_SHADOW, BLOCK_COLOR_OUTLINE), \
-    BLOCK_ROW(main, main, main, main, main, main, BLOCK_COLOR_SHADOW, BLOCK_COLOR_OUTLINE), \
-    BLOCK_ROW(BLOCK_COLOR_SHADOW, BLOCK_COLOR_SHADOW, BLOCK_COLOR_SHADOW, BLOCK_COLOR_SHADOW, BLOCK_COLOR_SHADOW, BLOCK_COLOR_SHADOW, BLOCK_COLOR_SHADOW, BLOCK_COLOR_OUTLINE)
+    BLOCK_ROW(BLOCK_COLOR_OUTLINE, BLOCK_COLOR_HIGHLIGHT, BLOCK_COLOR_HIGHLIGHT, main, main, main, BLOCK_COLOR_SHADOW, BLOCK_COLOR_OUTLINE), \
+    BLOCK_ROW(BLOCK_COLOR_OUTLINE, BLOCK_COLOR_HIGHLIGHT, main, main, main, main, BLOCK_COLOR_SHADOW, BLOCK_COLOR_OUTLINE), \
+    BLOCK_ROW(BLOCK_COLOR_OUTLINE, main, main, main, main, main, BLOCK_COLOR_SHADOW, BLOCK_COLOR_OUTLINE), \
+    BLOCK_ROW(BLOCK_COLOR_OUTLINE, main, main, main, main, main, BLOCK_COLOR_SHADOW, BLOCK_COLOR_OUTLINE), \
+    BLOCK_ROW(BLOCK_COLOR_OUTLINE, main, main, main, main, main, BLOCK_COLOR_SHADOW, BLOCK_COLOR_OUTLINE), \
+    BLOCK_ROW(BLOCK_COLOR_OUTLINE, BLOCK_COLOR_SHADOW, BLOCK_COLOR_SHADOW, BLOCK_COLOR_SHADOW, BLOCK_COLOR_SHADOW, BLOCK_COLOR_SHADOW, BLOCK_COLOR_SHADOW, BLOCK_COLOR_OUTLINE), \
+    BLOCK_ROW(BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE, BLOCK_COLOR_OUTLINE)
 
 static char number_buffer[12];
 
@@ -60,32 +50,25 @@ static const u32 block_tiles[BLOCK_TILE_COUNT * 8] = {
     BLOCK_ROW(0, 0, 0, 0, 0, 0, 0, 0),
 
     /* I */
-    BLOCK_LEFT(BLOCK_COLOR_I),
-    BLOCK_RIGHT(BLOCK_COLOR_I),
+    BLOCK_SQUARE(BLOCK_COLOR_I),
 
     /* O */
-    BLOCK_LEFT(BLOCK_COLOR_O),
-    BLOCK_RIGHT(BLOCK_COLOR_O),
+    BLOCK_SQUARE(BLOCK_COLOR_O),
 
     /* T */
-    BLOCK_LEFT(BLOCK_COLOR_T),
-    BLOCK_RIGHT(BLOCK_COLOR_T),
+    BLOCK_SQUARE(BLOCK_COLOR_T),
 
     /* S */
-    BLOCK_LEFT(BLOCK_COLOR_S),
-    BLOCK_RIGHT(BLOCK_COLOR_S),
+    BLOCK_SQUARE(BLOCK_COLOR_S),
 
     /* Z */
-    BLOCK_LEFT(BLOCK_COLOR_Z),
-    BLOCK_RIGHT(BLOCK_COLOR_Z),
+    BLOCK_SQUARE(BLOCK_COLOR_Z),
 
     /* J */
-    BLOCK_LEFT(BLOCK_COLOR_J),
-    BLOCK_RIGHT(BLOCK_COLOR_J),
+    BLOCK_SQUARE(BLOCK_COLOR_J),
 
     /* L */
-    BLOCK_LEFT(BLOCK_COLOR_L),
-    BLOCK_RIGHT(BLOCK_COLOR_L)
+    BLOCK_SQUARE(BLOCK_COLOR_L)
 };
 
 static u16 block_attr(u16 tile_index)
@@ -97,25 +80,22 @@ static void draw_block_cell(u8 cell, u16 x, u16 y)
 {
     if (cell == 0)
     {
-        VDP_fillTileMapRect(BG_A, block_attr(BLOCK_TILE_EMPTY), x, y, 2, 1);
+        VDP_fillTileMapRect(BG_A, block_attr(BLOCK_TILE_EMPTY), x, y, 1, 1);
         return;
     }
 
     if (cell <= 7)
     {
-        u16 left_tile = BLOCK_TILE_BASE + 1 + ((u16)(cell - 1) * 2);
-
-        VDP_setTileMapXY(BG_A, block_attr(left_tile), x, y);
-        VDP_setTileMapXY(BG_A, block_attr(left_tile + 1), x + 1, y);
+        VDP_setTileMapXY(BG_A, block_attr(BLOCK_TILE_BASE + cell), x, y);
         return;
     }
 
-    VDP_fillTileMapRect(BG_A, block_attr(BLOCK_TILE_EMPTY), x, y, 2, 1);
+    VDP_fillTileMapRect(BG_A, block_attr(BLOCK_TILE_EMPTY), x, y, 1, 1);
 }
 
 static void clear_next_piece(void)
 {
-    VDP_fillTileMapRect(BG_A, block_attr(BLOCK_TILE_EMPTY), PANEL_X, 4, 8, 3);
+    VDP_fillTileMapRect(BG_A, block_attr(BLOCK_TILE_EMPTY), PANEL_X, 4, 8, 2);
 }
 
 static void init_block_palette(void)
@@ -185,13 +165,13 @@ static void draw_static_text(void)
     VDP_drawText("2026 HOME BREW", 16, 1);
 
     VDP_setTextPalette(PAL1);
-    VDP_drawText("+--------------------+", BOARD_X, BOARD_Y - 1);
+    VDP_drawText("+----------+", BOARD_X, BOARD_Y - 1);
     for (y = 0; y < TETRIS_BOARD_HEIGHT; y++)
     {
         VDP_drawText("|", BOARD_X, BOARD_Y + y);
-        VDP_drawText("|", BOARD_X + (TETRIS_BOARD_WIDTH * 2) + 1, BOARD_Y + y);
+        VDP_drawText("|", BOARD_X + TETRIS_BOARD_WIDTH + 1, BOARD_Y + y);
     }
-    VDP_drawText("+--------------------+", BOARD_X, BOARD_Y + TETRIS_BOARD_HEIGHT);
+    VDP_drawText("+----------+", BOARD_X, BOARD_Y + TETRIS_BOARD_HEIGHT);
 
     VDP_setTextPalette(PAL2);
     draw_panel_box(PANEL_X - 1, 3, "NEXT");
@@ -201,9 +181,9 @@ static void draw_static_text(void)
 
     VDP_setTextPalette(PAL1);
     VDP_drawText("LEFT/RIGHT MOVE", 23, 23);
-    VDP_drawText("UP HARD DROP", 25, 24);
+    VDP_drawText("UP/A/B/C ROTATE", 22, 24);
     VDP_drawText("DOWN SOFT DROP", 23, 25);
-    VDP_drawText("A/B/C ROT START PAUSE", 18, 26);
+    VDP_drawText("START PAUSE", 25, 26);
 }
 
 static void draw_next_piece(const TetrisState *state)
@@ -223,17 +203,8 @@ static void draw_next_piece(const TetrisState *state)
         s8 y;
 
         tetris_piece_cell(state->next_piece, 0, i, &x, &y);
-        draw_block_cell(state->next_piece + 1, PANEL_X + 1 + (x * 2), 4 + y);
+        draw_block_cell(state->next_piece + 1, PANEL_X + 2 + x, 4 + y);
     }
-}
-
-static void clear_overlay_tail(void)
-{
-    VDP_drawText(" ", 23, 10);
-    VDP_drawText(" ", 23, 11);
-    VDP_drawText(" ", 23, 12);
-    VDP_drawText(" ", 23, 13);
-    VDP_drawText(" ", 23, 14);
 }
 
 static void clear_overlay(void)
@@ -243,6 +214,7 @@ static void clear_overlay(void)
     VDP_drawText("                    ", 4, 12);
     VDP_drawText("                    ", 4, 13);
     VDP_drawText("                    ", 4, 14);
+    VDP_fillTileMapRect(BG_A, block_attr(BLOCK_TILE_EMPTY), 7, 16, 7, 1);
 }
 
 static void draw_overlay(const TetrisState *state)
@@ -253,7 +225,7 @@ static void draw_overlay(const TetrisState *state)
     {
         if (overlay_visible)
         {
-            clear_overlay_tail();
+            clear_overlay();
             overlay_visible = 0;
         }
 
@@ -270,11 +242,11 @@ static void draw_overlay(const TetrisState *state)
 
         VDP_drawText("MEGA BLOCKS", 7, 10);
         VDP_drawText("PRESS START", 7, 12);
-        VDP_drawText("A/B/C ALSO START", 5, 14);
+        VDP_drawText("UP/A/B/C START", 6, 14);
 
         for (i = 0; i < 7; i++)
         {
-            draw_block_cell(i + 1, 5 + (i * 2), 16);
+            draw_block_cell(i + 1, 7 + i, 16);
         }
     }
     else if (state->game_over)
@@ -326,7 +298,7 @@ void render_draw(const TetrisState *state)
                 cell = tetris_cell_at(state, x, y);
             }
 
-            draw_block_cell(cell, BOARD_X + 1 + (x * 2), BOARD_Y + y);
+            draw_block_cell(cell, BOARD_X + 1 + x, BOARD_Y + y);
         }
     }
 

@@ -373,152 +373,152 @@
 00003f20 t _empty_hint_callback
 00003f22 t VDP_clearTileMap.constprop.0
 00004048 t VDP_setTileMapDataEx.constprop.0
-00004128 t VDP_fillTileMapRect.constprop.1
-0000419c t draw_block_cell
-000042b2 t VDP_setHVLatching
-000042f2 t _empty_callback.lto_priv.1
-000042f4 t PSG_reset
-0000432c t SPR_defragVRAM
-000043a6 t YM2612_reset
-0000479e t DMA_initEx.constprop.0
-00004832 t PAL_doFadeStep
-00004852 t VDP_drawText
-00004b0e t draw_number.constprop.0
-00004ee6 t draw_panel_box.constprop.0
-00004f58 t JOY_setSupport
-00004f7a t SYS_enableInts
-00004fa8 t SYS_disableInts
-00004fda t Z80_clear
-00005036 t Z80_upload.constprop.0
-000050ae t Z80_loadDriverInternal.constprop.0
-00005126 t SND_NULL_loadDriver
-0000513c t Z80_init
-000051a2 t JOY_update
-00005702 t VDP_loadDefaultFont
-000059bc t updateMapsAddress
-00005a30 t VDP_setWindowAddress
-00005a6e t VDP_setSpriteListAddress
-00005a9a t VDP_setPlaneSize.constprop.0
-00005ca0 t VDP_resetScreen
-00005efc t VDP_init
-00006024 t VDP_waitVBlank.constprop.0
-000061ae t SYS_doVBlankProcessEx.constprop.0.isra.0
-000066d4 t JOY_reset
-00006d18 t internal_reset
-00006e6c t main.isra.0
-000088c8 T VDP_setAutoInc
-000088e2 T BMP_doVBlankProcess
-000088ec T _start_entry
-000089be T _reset_entry
-000089c8 T MDDBG__SymbolDataPtr
-000089cc t __ErrorHandler
-000089cc t MDDBG__ErrorHandler
-00008af4 t MDDBG__Error_IdleLoop
-00008b0e t MDDBG__Error_InitConsole
-00008b1a t MDDBG__Error_MaskStackBoundaries
-00008b84 t MDDBG__Error_DrawOffsetLocation
-00008b88 t MDDBG__Error_DrawOffsetLocation2
-00008b8e t MDDBG__Error_DrawOffsetLocation__inj
-00008c1c t MDDBG__ErrorHandler_SetupVDP
-00008c52 t MDDBG__ErrorHandler_VDPConfig
-00008c68 t MDDBG__ErrorHandler_VDPConfig_Nametables
-00008ca4 t MDDBG__ErrorHandler_ConsoleConfig_Initial
-00008ca8 t MDDBG__ErrorHandler_ConsoleConfig_Shared
-00008cd8 t MDDBG__Str_OffsetLocation_24bit
-00008ce1 t MDDBG__Str_OffsetLocation_32bit
-00008d1c t MDDBG__Art1bpp_Font
-00009016 t MDDBG__GetSymbolByOffset
-00009330 t MDDBG__FormatString
-0000940a t MDDBG__Console_Init
-00009448 t MDDBG__Console_Reset
-0000944a t MDDBG__Console_InitShared
-00009494 t MDDBG__Console_SetPosAsXY_Stack
-0000949a t MDDBG__Console_SetPosAsXY
-000094ce t MDDBG__Console_GetPosAsXY
-000094f4 t MDDBG__Console_StartNewLine
-00009522 t MDDBG__Console_SetBasePattern
-0000953e t MDDBG__Console_SetWidth
-0000955c t MDDBG__Console_WriteLine_WithPattern
-0000955e t MDDBG__Console_WriteLine
-00009562 t MDDBG__Console_Write
-00009628 t MDDBG__Console_WriteLine_Formatted
-0000962c t MDDBG__Console_Write_Formatted
-0000965c t MDDBG__Decomp1bpp
-00009678 t MDDBG__KDebug_WriteLine_Formatted
-0000967c t MDDBG__KDebug_Write_Formatted
-000096d0 t MDDBG__KDebug_FlushLine
-000096da t MDDBG__KDebug_WriteLine
-000096de t MDDBG__KDebug_Write
-0000970c t MDDBG__ErrorHandler_ConsoleOnly
-00009732 t MDDBG__ErrorHandler_ClearConsole
-0000975c t MDDBG__ErrorHandler_PauseConsole
-00009796 t MDDBG__ErrorHandler_PagesController
-000097f6 t MDDBG__VSync
-00009830 t MDDBG__ErrorHandler_ExtraDebuggerList
-0000983c t MDDBG__Debugger_AddressRegisters
-00009888 t MDDBG__Debugger_Backtrace
-00009926 T _Bus_Error
-00009926 t MDDBG__BusError
-0000993a T _Address_Error
-0000993a t MDDBG__AddressError
-00009952 T _Illegal_Instruction
-00009952 t MDDBG__IllegalInstr
-00009970 T _Zero_Divide
-00009970 t MDDBG__ZeroDivide
-00009986 T _Chk_Instruction
-00009986 t MDDBG__ChkInstr
-000099a0 T _Trapv_Instruction
-000099a0 t MDDBG__TrapvInstr
-000099bc T _Privilege_Violation
-000099bc t MDDBG__PrivilegeViol
-000099da T _Trace
-000099da t MDDBG__Trace
-000099ea T _Line_1010_Emulation
-000099ea t MDDBG__Line1010Emu
-00009a06 T _Line_1111_Emulation
-00009a06 t MDDBG__Line1111Emu
-00009a22 T _Error_Exception
-00009a22 t MDDBG__ErrorExcept
-00009a3c T __udivsi3	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:469
-00009a3c T __udivsi3_internal	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:469
-00009a64 t L3	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:486
-00009a66 t L4	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:487
-00009a92 t L5	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:508
-00009a94 t L6	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:510
-00009a98 T __umodsi3	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:585
-00009ac8 T __modsi3	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:611
-00009af8 T __mulsi3	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:442
-00009af8 T __mulsi3_internal	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:442
-00009b1c T __divsi3	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:547
-00009b1c T __divsi3_internal	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:547
-00009b2a t L1	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:558
-00009b34 t L2	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:567
-00009b46 t L3	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:576
-00009b4c T __CTOR_LIST__
-00009b54 T __CTOR_END__
-00009b54 T __DTOR_LIST__
-00009b5c T __DTOR_END__
-00009ce6 t palette_blue
-00009d06 t palette_green
-00009d26 t palette_red
-00009d46 t palette_grey
-00009d66 t xlt.1
-00009d6e t xlt_all.0
-00009d7e t line_scores.0
-00009d86 t piece_shapes
-00009e66 t block_tiles
-0000a046 t sgdk_logo_palette
-0000a04c T sgdk_logo
-0000a05a T font_default
-0000a062 T drv_null
-0000a09c T __INIT_SECTION__
-0000a09e T __FINI_SECTION__
-0000a0a0 T _etext
-0000a0a0 t sgdk_logo_palette_data
-0000a0c0 T stop_xgm
-0000a16c t font_default_data
-0000a3ce t sgdk_logo_data
-0000a808 A _stext
+00004128 t VDP_fillTileMapRect.constprop.2
+00004196 t VDP_setHVLatching
+000041d6 t _empty_callback.lto_priv.1
+000041d8 t PSG_reset
+00004210 t SPR_defragVRAM
+0000428a t YM2612_reset
+00004682 t DMA_initEx.constprop.0
+00004716 t PAL_doFadeStep
+00004736 t VDP_drawText
+000049f2 t draw_number.constprop.0
+00004dca t draw_panel_box.constprop.0
+00004e3c t clear_overlay
+00004f24 t JOY_setSupport
+00004f46 t SYS_enableInts
+00004f74 t SYS_disableInts
+00004fa6 t Z80_clear
+00005002 t Z80_upload.constprop.0
+0000507a t Z80_loadDriverInternal.constprop.0
+000050f2 t SND_NULL_loadDriver
+00005108 t Z80_init
+0000516e t JOY_update
+000056ce t VDP_loadDefaultFont
+00005988 t updateMapsAddress
+000059fc t VDP_setWindowAddress
+00005a3a t VDP_setSpriteListAddress
+00005a66 t VDP_setPlaneSize.constprop.0
+00005c6c t VDP_resetScreen
+00005ec8 t VDP_init
+00005ff0 t VDP_waitVBlank.constprop.0
+0000617a t SYS_doVBlankProcessEx.constprop.0.isra.0
+000066a0 t JOY_reset
+00006ce4 t internal_reset
+00006e38 t main.isra.0
+000089e4 T VDP_setAutoInc
+000089fe T BMP_doVBlankProcess
+00008a08 T _start_entry
+00008ada T _reset_entry
+00008ae4 T MDDBG__SymbolDataPtr
+00008ae8 t __ErrorHandler
+00008ae8 t MDDBG__ErrorHandler
+00008c10 t MDDBG__Error_IdleLoop
+00008c2a t MDDBG__Error_InitConsole
+00008c36 t MDDBG__Error_MaskStackBoundaries
+00008ca0 t MDDBG__Error_DrawOffsetLocation
+00008ca4 t MDDBG__Error_DrawOffsetLocation2
+00008caa t MDDBG__Error_DrawOffsetLocation__inj
+00008d38 t MDDBG__ErrorHandler_SetupVDP
+00008d6e t MDDBG__ErrorHandler_VDPConfig
+00008d84 t MDDBG__ErrorHandler_VDPConfig_Nametables
+00008dc0 t MDDBG__ErrorHandler_ConsoleConfig_Initial
+00008dc4 t MDDBG__ErrorHandler_ConsoleConfig_Shared
+00008df4 t MDDBG__Str_OffsetLocation_24bit
+00008dfd t MDDBG__Str_OffsetLocation_32bit
+00008e38 t MDDBG__Art1bpp_Font
+00009132 t MDDBG__GetSymbolByOffset
+0000944c t MDDBG__FormatString
+00009526 t MDDBG__Console_Init
+00009564 t MDDBG__Console_Reset
+00009566 t MDDBG__Console_InitShared
+000095b0 t MDDBG__Console_SetPosAsXY_Stack
+000095b6 t MDDBG__Console_SetPosAsXY
+000095ea t MDDBG__Console_GetPosAsXY
+00009610 t MDDBG__Console_StartNewLine
+0000963e t MDDBG__Console_SetBasePattern
+0000965a t MDDBG__Console_SetWidth
+00009678 t MDDBG__Console_WriteLine_WithPattern
+0000967a t MDDBG__Console_WriteLine
+0000967e t MDDBG__Console_Write
+00009744 t MDDBG__Console_WriteLine_Formatted
+00009748 t MDDBG__Console_Write_Formatted
+00009778 t MDDBG__Decomp1bpp
+00009794 t MDDBG__KDebug_WriteLine_Formatted
+00009798 t MDDBG__KDebug_Write_Formatted
+000097ec t MDDBG__KDebug_FlushLine
+000097f6 t MDDBG__KDebug_WriteLine
+000097fa t MDDBG__KDebug_Write
+00009828 t MDDBG__ErrorHandler_ConsoleOnly
+0000984e t MDDBG__ErrorHandler_ClearConsole
+00009878 t MDDBG__ErrorHandler_PauseConsole
+000098b2 t MDDBG__ErrorHandler_PagesController
+00009912 t MDDBG__VSync
+0000994c t MDDBG__ErrorHandler_ExtraDebuggerList
+00009958 t MDDBG__Debugger_AddressRegisters
+000099a4 t MDDBG__Debugger_Backtrace
+00009a42 T _Bus_Error
+00009a42 t MDDBG__BusError
+00009a56 T _Address_Error
+00009a56 t MDDBG__AddressError
+00009a6e T _Illegal_Instruction
+00009a6e t MDDBG__IllegalInstr
+00009a8c T _Zero_Divide
+00009a8c t MDDBG__ZeroDivide
+00009aa2 T _Chk_Instruction
+00009aa2 t MDDBG__ChkInstr
+00009abc T _Trapv_Instruction
+00009abc t MDDBG__TrapvInstr
+00009ad8 T _Privilege_Violation
+00009ad8 t MDDBG__PrivilegeViol
+00009af6 T _Trace
+00009af6 t MDDBG__Trace
+00009b06 T _Line_1010_Emulation
+00009b06 t MDDBG__Line1010Emu
+00009b22 T _Line_1111_Emulation
+00009b22 t MDDBG__Line1111Emu
+00009b3e T _Error_Exception
+00009b3e t MDDBG__ErrorExcept
+00009b58 T __udivsi3	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:469
+00009b58 T __udivsi3_internal	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:469
+00009b80 t L3	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:486
+00009b82 t L4	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:487
+00009bae t L5	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:508
+00009bb0 t L6	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:510
+00009bb4 T __umodsi3	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:585
+00009be4 T __modsi3	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:611
+00009c14 T __mulsi3	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:442
+00009c14 T __mulsi3_internal	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:442
+00009c38 T __divsi3	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:547
+00009c38 T __divsi3_internal	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:547
+00009c46 t L1	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:558
+00009c50 t L2	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:567
+00009c62 t L3	/Users/happyelements/marsdev/m68k-gcc-toolchain/gcc-15.2.0/build/m68k-elf/libgcc/../../../libgcc/config/m68k/lb1sf68.S:576
+00009c68 T __CTOR_LIST__
+00009c70 T __CTOR_END__
+00009c70 T __DTOR_LIST__
+00009c78 T __DTOR_END__
+00009df0 t palette_blue
+00009e10 t palette_green
+00009e30 t palette_red
+00009e50 t palette_grey
+00009e70 t xlt.1
+00009e78 t xlt_all.0
+00009e88 t line_scores.0
+00009e90 t piece_shapes
+00009f70 t block_tiles
+0000a070 t sgdk_logo_palette
+0000a076 T sgdk_logo
+0000a084 T font_default
+0000a08c T drv_null
+0000a0c8 T __INIT_SECTION__
+0000a0ca T __FINI_SECTION__
+0000a0cc T _etext
+0000a0cc t sgdk_logo_palette_data
+0000a0ec T stop_xgm
+0000a198 t font_default_data
+0000a3fa t sgdk_logo_data
+0000a834 A _stext
 e0ff0000 D task_sr
 e0ff0002 D task_pc
 e0ff0006 D task_regs

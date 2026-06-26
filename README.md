@@ -1,14 +1,14 @@
 # SGDK Tetris
 
-A small Mega Drive / Genesis homebrew Tetris project built with SGDK. The current version is a polished ROM named **Mega Blocks**: it uses SGDK text for the UI and custom PAL3 background tiles for real colored Tetris blocks.
+A small Mega Drive / Genesis homebrew Tetris project built with SGDK. The current version is a polished ROM named **Mega Blocks**: it uses SGDK text for the UI and custom background tiles for real square colored Tetris blocks.
 
 ## Features
 
 - 10x20 Tetris playfield
 - 7-bag piece randomizer
-- Custom colored block tiles for the playfield and next-piece preview
+- Custom square colored block tiles for the playfield and next-piece preview
 - Next-piece shape preview
-- Soft drop and hard drop scoring
+- Soft drop scoring
 - Basic clockwise rotation with simple wall kicks
 - DAS/ARR-style horizontal repeat for smoother movement
 - Line, score, and level tracking
@@ -63,7 +63,7 @@ blastem /Users/happyelements/sgdk-tetris/out/release/rom.bin
 - Start: start game, pause/resume, reset after game over
 - D-pad left/right: move piece with repeat delay
 - D-pad down: soft drop
-- D-pad up: hard drop
+- D-pad up: rotate clockwise
 - A/B/C: rotate clockwise
 
 ## Manual Verification
@@ -71,13 +71,13 @@ blastem /Users/happyelements/sgdk-tetris/out/release/rom.bin
 After building, run the ROM in an emulator and check:
 
 1. The ROM boots to the Mega Blocks title screen.
-2. Start begins gameplay.
+2. Start, Up, or A/B/C begins gameplay.
 3. Left/right movement has a controlled repeat rhythm instead of moving every frame.
 4. Down soft-drops and increases score while the piece moves down.
-5. Up hard-drops, immediately locks the piece, and awards drop score.
+5. Up rotates the active piece without hard-dropping or immediately locking it.
 6. A/B/C rotate the active piece.
-7. The playfield uses colored blocks instead of `II`, `OO`, or other letter cells.
-8. NEXT shows a four-cell colored piece preview.
+7. The playfield uses square colored blocks instead of `II`, `OO`, or rectangular cells.
+8. NEXT shows a four-cell square colored piece preview.
 9. Piece order is randomized by 7-bag instead of repeating a fixed sequence.
 10. Line clears update score, lines, and level.
 11. Start pauses/resumes during play.
@@ -91,7 +91,7 @@ This version intentionally keeps the UI simple while using custom SGDK backgroun
 
 Planned future improvements include:
 
-- Custom tiles and palettes
+- Larger custom art and palettes
 - Sound effects and music
 - Ghost piece and hold piece
 - More complete SRS-style rotation kicks

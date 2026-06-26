@@ -79,8 +79,8 @@ void input_read(TetrisInput *input)
     }
 
     input->down_held = (buttons & BUTTON_DOWN) != 0;
-    input->rotate_pressed = (pressed & (BUTTON_A | BUTTON_B | BUTTON_C)) != 0;
-    input->hard_drop_pressed = (pressed & BUTTON_UP) != 0;
+    input->rotate_pressed = (pressed & (BUTTON_UP | BUTTON_A | BUTTON_B | BUTTON_C)) != 0;
+    input->hard_drop_pressed = 0;
     input->start_pressed = (pressed & BUTTON_START) != 0;
     input->raw_buttons = buttons;
 
