@@ -10,9 +10,9 @@
 
 #define BLOCK_TILE_BASE TILE_USER_INDEX
 #define BLOCK_TILE_EMPTY BLOCK_TILE_BASE
-#define BLOCK_TILE_COUNT 37
-#define BLOCK_TILE_GHOST (BLOCK_TILE_BASE + 32)
-#define BLOCK_TILE_BORDER (BLOCK_TILE_BASE + 36)
+#define BLOCK_TILE_COUNT 61
+#define BLOCK_TILE_GHOST_BASE (BLOCK_TILE_BASE + 32)
+#define BLOCK_TILE_BORDER (BLOCK_TILE_BASE + 60)
 
 #define BLOCK_COLOR_I 1
 #define BLOCK_COLOR_O 2
@@ -93,15 +93,15 @@
 
 #define BLOCK_2X2(main) TILE_TL(main), TILE_TR(main), TILE_BL(main), TILE_BR(main)
 
-#define TILE_GHOST \
-    BLOCK_ROW(BLOCK_COLOR_GHOST, BLOCK_COLOR_GHOST, BLOCK_COLOR_GHOST, BLOCK_COLOR_GHOST, BLOCK_COLOR_GHOST, BLOCK_COLOR_GHOST, BLOCK_COLOR_GHOST, BLOCK_COLOR_GHOST), \
-    BLOCK_ROW(BLOCK_COLOR_GHOST, 0, 0, 0, 0, 0, 0, 0), \
-    BLOCK_ROW(BLOCK_COLOR_GHOST, 0, 0, 0, 0, 0, 0, 0), \
-    BLOCK_ROW(BLOCK_COLOR_GHOST, 0, 0, 0, 0, 0, 0, 0), \
-    BLOCK_ROW(BLOCK_COLOR_GHOST, 0, 0, 0, 0, 0, 0, 0), \
-    BLOCK_ROW(BLOCK_COLOR_GHOST, 0, 0, 0, 0, 0, 0, 0), \
-    BLOCK_ROW(BLOCK_COLOR_GHOST, 0, 0, 0, 0, 0, 0, 0), \
-    BLOCK_ROW(BLOCK_COLOR_GHOST, 0, 0, 0, 0, 0, 0, 0)
+#define TILE_GHOST(c) \
+    BLOCK_ROW(c, c, c, c, c, c, c, c), \
+    BLOCK_ROW(c, c, 0, c, 0, c, 0, c), \
+    BLOCK_ROW(c, 0, c, 0, c, 0, c, c), \
+    BLOCK_ROW(c, c, 0, c, 0, c, 0, c), \
+    BLOCK_ROW(c, 0, c, 0, c, 0, c, c), \
+    BLOCK_ROW(c, c, 0, c, 0, c, 0, c), \
+    BLOCK_ROW(c, 0, c, 0, c, 0, c, c), \
+    BLOCK_ROW(c, c, c, c, c, c, c, c)
 
 static char number_buffer[12];
 
@@ -114,13 +114,24 @@ static const u32 block_tiles[BLOCK_TILE_COUNT * 8] = {
     BLOCK_2X2(BLOCK_COLOR_Z),
     BLOCK_2X2(BLOCK_COLOR_J),
     BLOCK_2X2(BLOCK_COLOR_L),
-    TILE_GHOST, TILE_GHOST, TILE_GHOST, TILE_GHOST,
+    TILE_GHOST(BLOCK_COLOR_I), TILE_GHOST(BLOCK_COLOR_I), TILE_GHOST(BLOCK_COLOR_I), TILE_GHOST(BLOCK_COLOR_I),
+    TILE_GHOST(BLOCK_COLOR_O), TILE_GHOST(BLOCK_COLOR_O), TILE_GHOST(BLOCK_COLOR_O), TILE_GHOST(BLOCK_COLOR_O),
+    TILE_GHOST(BLOCK_COLOR_T), TILE_GHOST(BLOCK_COLOR_T), TILE_GHOST(BLOCK_COLOR_T), TILE_GHOST(BLOCK_COLOR_T),
+    TILE_GHOST(BLOCK_COLOR_S), TILE_GHOST(BLOCK_COLOR_S), TILE_GHOST(BLOCK_COLOR_S), TILE_GHOST(BLOCK_COLOR_S),
+    TILE_GHOST(BLOCK_COLOR_Z), TILE_GHOST(BLOCK_COLOR_Z), TILE_GHOST(BLOCK_COLOR_Z), TILE_GHOST(BLOCK_COLOR_Z),
+    TILE_GHOST(BLOCK_COLOR_J), TILE_GHOST(BLOCK_COLOR_J), TILE_GHOST(BLOCK_COLOR_J), TILE_GHOST(BLOCK_COLOR_J),
+    TILE_GHOST(BLOCK_COLOR_L), TILE_GHOST(BLOCK_COLOR_L), TILE_GHOST(BLOCK_COLOR_L), TILE_GHOST(BLOCK_COLOR_L),
     TILE_FULL(BLOCK_COLOR_BORDER)
 };
 
 static u16 block_attr(u16 tile_index)
 {
     return TILE_ATTR_FULL(PAL2, FALSE, FALSE, FALSE, tile_index);
+}
+
+static u16 ghost_attr(u16 tile_index)
+{
+    return TILE_ATTR_FULL(PAL3, FALSE, FALSE, FALSE, tile_index);
 }
 
 static u16 cell_tile_base(u8 cell)
@@ -144,7 +155,7 @@ static void draw_block_cell(u8 cell, u16 x, u16 y)
         return;
     }
 
-    draw_2x2(BLOCK_TILE_GHOST, x, y);
+    draw_2x2(BLOCK_TILE_GHOST_BASE, x, y);
 }
 
 static void draw_border(void)
@@ -172,6 +183,26 @@ static void clear_next_piece(void)
     VDP_fillTileMapRect(BG_A, block_attr(BLOCK_TILE_EMPTY), NEXT_X, NEXT_Y, 8, 4);
 }
 
+static u16 ghost_tile_base(u8 cell)
+{
+    if ((cell >= 1) && (cell <= 7))
+    {
+        return BLOCK_TILE_GHOST_BASE + ((u16)(cell - 1) * 4);
+    }
+
+    return BLOCK_TILE_GHOST_BASE;
+}
+
+static void draw_ghost_cell(u8 cell, u16 x, u16 y)
+{
+    u16 tile_base = ghost_tile_base(cell);
+
+    VDP_setTileMapXY(BG_A, ghost_attr(tile_base), x, y);
+    VDP_setTileMapXY(BG_A, ghost_attr(tile_base + 1), x + 1, y);
+    VDP_setTileMapXY(BG_A, ghost_attr(tile_base + 2), x, y + 1);
+    VDP_setTileMapXY(BG_A, ghost_attr(tile_base + 3), x + 1, y + 1);
+}
+
 static void init_block_palette(void)
 {
     PAL_setColor(32, RGB3_3_3_TO_VDPCOLOR(0, 0, 1));
@@ -185,8 +216,20 @@ static void init_block_palette(void)
     PAL_setColor(40, RGB3_3_3_TO_VDPCOLOR(7, 7, 7));
     PAL_setColor(41, RGB3_3_3_TO_VDPCOLOR(1, 1, 2));
     PAL_setColor(42, RGB3_3_3_TO_VDPCOLOR(0, 0, 0));
-    PAL_setColor(43, RGB3_3_3_TO_VDPCOLOR(0, 4, 4));
+    PAL_setColor(43, RGB3_3_3_TO_VDPCOLOR(4, 4, 4));
     PAL_setColor(44, RGB3_3_3_TO_VDPCOLOR(4, 4, 4));
+    PAL_setColor(45, RGB3_3_3_TO_VDPCOLOR(0, 4, 4));
+    PAL_setColor(46, RGB3_3_3_TO_VDPCOLOR(4, 4, 0));
+    PAL_setColor(47, RGB3_3_3_TO_VDPCOLOR(3, 0, 4));
+
+    PAL_setColor(48, RGB3_3_3_TO_VDPCOLOR(0, 0, 1));
+    PAL_setColor(49, RGB3_3_3_TO_VDPCOLOR(0, 3, 3));
+    PAL_setColor(50, RGB3_3_3_TO_VDPCOLOR(4, 4, 0));
+    PAL_setColor(51, RGB3_3_3_TO_VDPCOLOR(3, 0, 4));
+    PAL_setColor(52, RGB3_3_3_TO_VDPCOLOR(0, 4, 1));
+    PAL_setColor(53, RGB3_3_3_TO_VDPCOLOR(4, 0, 0));
+    PAL_setColor(54, RGB3_3_3_TO_VDPCOLOR(0, 1, 4));
+    PAL_setColor(55, RGB3_3_3_TO_VDPCOLOR(4, 2, 0));
 }
 
 static void load_block_tiles(void)
@@ -420,10 +463,12 @@ void render_draw(const TetrisState *state)
 
             if (!cell && show_ghost && is_ghost_cell(state, ghost_y, x, y))
             {
-                cell = 8;
+                draw_ghost_cell(state->active_piece + 1, BOARD_X + 1 + (x * 2), BOARD_Y + (y * 2));
             }
-
-            draw_block_cell(cell, BOARD_X + 1 + (x * 2), BOARD_Y + (y * 2));
+            else
+            {
+                draw_block_cell(cell, BOARD_X + 1 + (x * 2), BOARD_Y + (y * 2));
+            }
         }
     }
 
