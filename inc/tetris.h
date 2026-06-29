@@ -48,12 +48,19 @@ typedef struct TetrisState
     u8 bag[7];
     u8 bag_index;
     u16 rng_state;
+    u16 clear_mask;
+    u8 clear_count;
+    u8 clear_timer;
+    u8 clear_phase;
 } TetrisState;
 
 void tetris_init(TetrisState *state);
 void tetris_update(TetrisState *state, const TetrisInput *input);
 u8 tetris_cell_at(const TetrisState *state, s8 x, s8 y);
 u8 tetris_is_active_cell(const TetrisState *state, s8 x, s8 y);
+u8 tetris_is_clearing_line(const TetrisState *state, s8 y);
+u8 tetris_line_clear_flash_hidden(const TetrisState *state);
+u8 tetris_line_clear_active(const TetrisState *state);
 void tetris_piece_cell(u8 piece, u8 rotation, u8 index, s8 *x, s8 *y);
 
 #endif

@@ -443,7 +443,7 @@ void render_draw(const TetrisState *state)
     s8 x;
     s8 y;
     s8 ghost_y = 0;
-    u8 show_ghost = state->started && !state->paused && !state->game_over;
+    u8 show_ghost = state->started && !state->paused && !state->game_over && !tetris_line_clear_active(state);
 
     if (show_ghost)
     {
@@ -454,7 +454,15 @@ void render_draw(const TetrisState *state)
     {
         for (x = 0; x < TETRIS_BOARD_WIDTH; x++)
         {
-            u8 cell = tetris_is_active_cell(state, x, y);
+            u8 cell;
+
+            if (tetris_is_clearing_line(state, y) && tetris_line_clear_flash_hidden(state))
+            {
+                draw_block_cell(0, BOARD_X + 1 + (x * 2), BOARD_Y + (y * 2));
+                continue;
+            }
+
+            cell = tetris_is_active_cell(state, x, y);
 
             if (!cell)
             {

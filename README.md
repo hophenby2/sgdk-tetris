@@ -12,6 +12,7 @@ A small Mega Drive / Genesis homebrew Tetris project built with SGDK. The curren
 - Soft drop scoring
 - Basic clockwise rotation with simple wall kicks
 - DAS/ARR-style horizontal repeat for smoother movement
+- Line-clear flash animation before cleared rows collapse
 - Line, score, and level tracking
 - Title, pause, and game-over states
 - Project-specific Mega Drive ROM header metadata
@@ -76,9 +77,10 @@ After building, run the ROM in an emulator and check:
 9. Down soft-drops and increases score while the piece moves down.
 10. Up and A/B/C rotate the active piece.
 11. NEXT shows a four-cell colored piece preview.
-12. Line clears update score, lines, and level.
-13. Start pauses/resumes during play.
-14. Game over appears when the stack reaches the top, and Start resets.
+12. Completed lines flash twice before the board collapses into the cleared shape.
+13. Line clears update score, lines, and level.
+14. Start pauses/resumes during play.
+15. Game over appears when the stack reaches the top, and Start resets.
 
 ## Current Scope
 
@@ -91,6 +93,5 @@ Planned future improvements include:
 - Sound effects and music
 - Hold piece
 - More complete SRS-style rotation kicks
-- Line-clear animation
 - High score persistence
 - Automated emulator smoke tests

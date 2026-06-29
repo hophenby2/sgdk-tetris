@@ -8,6 +8,8 @@
 #define SCORE_TETRIS 800
 #define SCORE_SOFT_DROP 1
 #define SCORE_HARD_DROP 2
+#define LINE_CLEAR_FLASH_FRAMES 6
+#define LINE_CLEAR_FLASH_PHASES 4
 
 typedef struct PieceCell
 {
@@ -154,10 +156,11 @@ static void spawn_piece(TetrisState *state)
     }
 }
 
-static void clear_lines(TetrisState *state)
+static u8 start_line_clear_if_needed(TetrisState *state)
 {
     s8 y;
     u8 cleared = 0;
+    u16 mask = 0;
 
     for (y = TETRIS_BOARD_HEIGHT - 1; y >= 0; y--)
     {
@@ -175,23 +178,8 @@ static void clear_lines(TetrisState *state)
 
         if (full)
         {
-            s8 copy_y;
-
-            for (copy_y = y; copy_y > 0; copy_y--)
-            {
-                for (x = 0; x < TETRIS_BOARD_WIDTH; x++)
-                {
-                    state->board[(u8)copy_y][x] = state->board[(u8)(copy_y - 1)][x];
-                }
-            }
-
-            for (x = 0; x < TETRIS_BOARD_WIDTH; x++)
-            {
-                state->board[0][x] = 0;
-            }
-
+            mask |= (u16)(1 << (u8)y);
             cleared++;
-            y++;
         }
     }
 
@@ -199,10 +187,73 @@ static void clear_lines(TetrisState *state)
     {
         static const u16 line_scores[4] = {SCORE_SINGLE, SCORE_DOUBLE, SCORE_TRIPLE, SCORE_TETRIS};
 
+        state->clear_mask = mask;
+        state->clear_count = cleared;
+        state->clear_timer = 0;
+        state->clear_phase = 0;
         state->lines += cleared;
         state->score += (u32)line_scores[cleared - 1] * (u32)(state->level + 1);
         state->level = (u8)(state->lines / 10);
         state->events |= TETRIS_EVENT_LINE;
+        return 1;
+    }
+
+    return 0;
+}
+
+static void collapse_cleared_lines(TetrisState *state)
+{
+    s8 read_y;
+    s8 write_y = TETRIS_BOARD_HEIGHT - 1;
+    u8 x;
+
+    for (read_y = TETRIS_BOARD_HEIGHT - 1; read_y >= 0; read_y--)
+    {
+        if (state->clear_mask & (u16)(1 << (u8)read_y))
+        {
+            continue;
+        }
+
+        if (write_y != read_y)
+        {
+            for (x = 0; x < TETRIS_BOARD_WIDTH; x++)
+            {
+                state->board[(u8)write_y][x] = state->board[(u8)read_y][x];
+            }
+        }
+
+        write_y--;
+    }
+
+    while (write_y >= 0)
+    {
+        for (x = 0; x < TETRIS_BOARD_WIDTH; x++)
+        {
+            state->board[(u8)write_y][x] = 0;
+        }
+
+        write_y--;
+    }
+}
+
+static void update_line_clear(TetrisState *state)
+{
+    state->clear_timer++;
+
+    if (state->clear_timer >= LINE_CLEAR_FLASH_FRAMES)
+    {
+        state->clear_timer = 0;
+        state->clear_phase++;
+
+        if (state->clear_phase >= LINE_CLEAR_FLASH_PHASES)
+        {
+            collapse_cleared_lines(state);
+            state->clear_mask = 0;
+            state->clear_count = 0;
+            state->clear_timer = 0;
+            state->clear_phase = 0;
+            spawn_piece(state);
+        }
     }
 }
 
@@ -223,8 +274,11 @@ static void lock_piece(TetrisState *state)
     }
 
     state->events |= TETRIS_EVENT_LOCK;
-    clear_lines(state);
-    spawn_piece(state);
+
+    if (!start_line_clear_if_needed(state))
+    {
+        spawn_piece(state);
+    }
 }
 
 static u8 try_move(TetrisState *state, s8 dx, s8 dy)
@@ -320,6 +374,10 @@ static void reset_playfield(TetrisState *state, u8 started)
     state->rotation = 0;
     state->piece_x = 3;
     state->piece_y = 0;
+    state->clear_mask = 0;
+    state->clear_count = 0;
+    state->clear_timer = 0;
+    state->clear_phase = 0;
 
     if (started)
     {
@@ -367,6 +425,12 @@ void tetris_update(TetrisState *state, const TetrisInput *input)
 
     if (state->paused)
     {
+        return;
+    }
+
+    if (state->clear_count)
+    {
+        update_line_clear(state);
         return;
     }
 
@@ -423,7 +487,7 @@ u8 tetris_is_active_cell(const TetrisState *state, s8 x, s8 y)
     u8 i;
     const PieceCell *shape = piece_shapes[state->active_piece][state->rotation & 3];
 
-    if (!state->started || state->game_over)
+    if (!state->started || state->game_over || state->clear_count)
     {
         return 0;
     }
@@ -437,6 +501,26 @@ u8 tetris_is_active_cell(const TetrisState *state, s8 x, s8 y)
     }
 
     return 0;
+}
+
+u8 tetris_is_clearing_line(const TetrisState *state, s8 y)
+{
+    if ((y < 0) || (y >= TETRIS_BOARD_HEIGHT))
+    {
+        return 0;
+    }
+
+    return (state->clear_mask & (u16)(1 << (u8)y)) != 0;
+}
+
+u8 tetris_line_clear_flash_hidden(const TetrisState *state)
+{
+    return state->clear_count && ((state->clear_phase & 1) == 0);
+}
+
+u8 tetris_line_clear_active(const TetrisState *state)
+{
+    return state->clear_count != 0;
 }
 
 void tetris_piece_cell(u8 piece, u8 rotation, u8 index, s8 *x, s8 *y)
