@@ -9,7 +9,7 @@
 #define SCORE_SOFT_DROP 1
 #define SCORE_HARD_DROP 2
 #define LINE_CLEAR_FLASH_FRAMES 6
-#define LINE_CLEAR_FLASH_PHASES 4
+#define LINE_CLEAR_FLASH_PHASES 2
 
 typedef struct PieceCell
 {

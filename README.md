@@ -77,7 +77,7 @@ After building, run the ROM in an emulator and check:
 9. Down soft-drops and increases score while the piece moves down.
 10. Up and A/B/C rotate the active piece.
 11. NEXT shows a four-cell colored piece preview.
-12. Completed lines flash twice before the board collapses into the cleared shape.
+12. Completed lines flash once before the board collapses into the cleared shape.
 13. Line clears update score, lines, and level.
 14. Start pauses/resumes during play.
 15. Game over appears when the stack reaches the top, and Start resets.
